@@ -1,0 +1,7 @@
+*.swp
+*.swo
+_vendor
+.vendor
+pki.io.d
+.vagrant
+Vagrantfile
