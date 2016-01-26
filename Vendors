@@ -1,0 +1,40 @@
+##### CLI argument parsing #####
+
+#vendor -f "github.com/pki-io/docopt.go" -r "github.com/docopt/docopt-go" -g "checkout 854c423c810880e30b9fecdabb12d54f4a92f9bb"
+vendor -f "github.com/pki-io/mow.cli" -r "github.com/jawher/mow.cli" -g "checkout cea64dc3eb09a4a293ed0d9a14438e171e343c1a"
+
+##### ASCII tables #####
+vendor -f "github.com/pki-io/tablewriter" -r "github.com/olekukonko/tablewriter" -g "checkout b9346ac189c55dd419f85c7ad2cd56f810bf19d6"
+
+##### Logging #####
+vendor -f "github.com/pki-io/seelog" -r "github.com/cihub/seelog" -g "checkout c510775bb50d98213cfafca75a4bc5e3fddc8d8f"
+
+##### Configuration #####
+vendor -f "github.com/pki-io/toml" -r "github.com/BurntSushi/toml" -g "checkout 056c9bc7be7190eaa7715723883caffa5f8fa3e4"
+
+##### Filesystem stuff #####
+vendor -f "github.com/pki-io/go-homedir" -r "github.com/mitchellh/go-homedir" -g "checkout 1f6da4a72e57d4e7edd4a7295a585e0a3999a2d4"
+
+
+##### Elliptic curve crypto #####
+vendor -f "github.com/pki-io/ecies" -r "github.com/obscuren/ecies" -g "checkout 7c0f4a9b18d992166452d8cd32caaefd92b26386"
+
+##### JSON #####
+vendor -f "github.com/pki-io/gojsonpointer" -r "github.com/xeipuuv/gojsonpointer" -g "checkout 636edb2500d21f2ed09ea96a00deb36bbd07cf70"
+vendor -f "github.com/pki-io/gojsonreference" -r "github.com/xeipuuv/gojsonreference" -g "checkout bc91f381155d8aab2993d3c1ac02ce5a7f7822ab"
+vendor -f "github.com/pki-io/gojsonschema" -r "github.com/xeipuuv/gojsonschema" -g "checkout eb966db2a6901073163758bd7473008c0d9a1167"
+
+##### Additional crypto #####
+vendor --clone -f "github.com/pki-io/crypto" -r "golang.org/x/crypto" -g "checkout 7d5b0be716b9d6d4269afdaae10032bb296d3cdf"
+vendor --build -f "github.com/pki-io/crypto" -r "golang.org/x/crypto" -p "pbkdf2"
+
+##### Core #####
+vendor --clone -r "github.com/pki-io/core" -g "checkout development"
+if [[ "${FDM_ENV:-}" != "DEV" ]]; then
+  for d in config crypto document entity fs index node ssh x509; do
+    vendor --build -r "github.com/pki-io/core" -p "$d"
+  done
+fi
+
+##### Controllers #####
+vendor -r "github.com/pki-io/controller" -g "checkout master"
